@@ -1,4 +1,55 @@
+function renderBooks(filter){
+  const bookswrapper = document.querySelector('.books');
+  
+  const books = getBooks();
 
+  console.log(filter)
+
+  if(filter === 'LOW_TO_HIGH'){
+    books.sort((a, b) => a.originalPrice - b.originalPrice);
+  }
+  else if(filter === 'HIGH_TO_Low') {
+    books.sort((a, b) => b.originalPrice - a.originalPrice);
+  }
+  else if(filter === 'Rating'){
+    books.sort((a, b) => b.rating - a.rating);
+  }
+
+  const booksHtml = books.map((book) =>{
+    return `<div class="book">
+            <figure class="book__img--wrapper">
+              <img class="book__img" src="${book.url}" ">
+            </figure>
+            <div class="book__title">
+              ${book.title}
+            </div>
+            <div class="book__ratings">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="book__price">
+              <span>$${book.originalPrice.toFixed(2)}</span> 
+            </div>
+          </div>`
+  })
+    .join(" ");
+
+
+  bookswrapper.innerHTML = booksHtml
+        
+          
+}
+setTimeout(() => {
+  renderBooks();
+  
+});
+
+function filterBooks(){
+  renderBooks(event.target.value)
+ }
 
 // FAKE DATA
 function getBooks() {
